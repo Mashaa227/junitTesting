@@ -1,0 +1,180 @@
+⚔️ Stub vs Mockito (Manual Stubbing vs Framework Mocking)
+Feature	Stub (Manual)	Mockito (Framework)
+Definition	Handwritten fake class or implementation	Dynamically created mock objects via Mockito
+Control over behavior	You hardcode behavior manually	You define behavior using when(...).thenReturn(...)
+Ease of use	Tedious for large/complex interfaces	Simple and expressive, even for complex behavior
+Verification (was method called?)	❌ Not possible unless you add logging manually	✅ Built-in via verify(mock).method()
+Best for	Simple cases, clear logic, no extra dependency	Complex interactions, large APIs, verifying behavior
+Dependency	None	Requires adding Mockito to your build tool (Maven/Gradle)
+Performance	Fast and lightweight	Slightly heavier due to reflection
+
+✅ When to Use Stubs
+You want minimal external dependencies (e.g., in an academic setting or constrained environment).
+
+You’re writing tests for very simple interfaces.
+
+You want 100% transparent behavior (since you wrote the stub class yourself).
+
+For pure unit testing of logic, especially when interaction verification isn’t needed.
+
+✅ When to Use Mockito
+Your class interacts with multiple collaborators (e.g., DAOs, services).
+
+You need to verify interactions (e.g., was a method called exactly once?).
+
+You want less boilerplate — Mockito can reduce the effort of writing test doubles.
+
+You're working in a team or in enterprise projects where mocking frameworks are the norm.
+
+which one is best and why
+
+
+ChatGPT said:
+Great follow-up, Neha! Here's a clear answer to: Which is best – Stub or Mockito?
+
+🏆 Best Choice: Depends on the Use Case
+✅ Use Mockito when:
+Your class has multiple dependencies (e.g., services, repositories, APIs).
+
+You need to verify interactions (e.g., whether a method was called, how many times).
+
+You want to simulate exceptions or edge cases easily.
+
+You’re working on enterprise-level applications or team projects.
+
+You need cleaner and more readable test code.
+
+🔍 Why it’s better:
+Mockito saves time, reduces boilerplate, and offers more control and flexibility in testing — especially when you need to test behavior, not just results.
+
+✅ Use Stubs when:
+You’re working on a simple application or module.
+
+You don’t want to add an external dependency.
+
+You want full control and visibility into what the stub does.
+
+You are in a restricted or academic environment (e.g., coding tests, interviews).
+
+🔍 Why it’s better in this case:
+Stubs are transparent, lightweight, and help reinforce your understanding of how testing works under the hood.
+
+✅ Summary Table
+Scenario	                       Best Choice
+Complex interaction logic	         Mockito
+Need to verify method calls	         Mockito
+Simple logic testing	               Stub
+No external libraries allowed	       Stub
+Large project with many classes	      Mockito
+
+🎯 Final Verdict
+Use Mockito for most real-world, scalable, and maintainable projects.
+Use Stubs for learning, interviews, and very simple cases.
+
+✅ Stub (Manual)
+Definition: You manually write a fake class or interface implementation.
+
+Control: Behavior is hardcoded inside the stub.
+
+Ease of Use: Becomes tedious and verbose for large or complex interfaces.
+
+Method Call Verification: ❌ Not supported unless you manually track method calls.
+
+Best Use Case: Small/simple tests where behavior is fixed and easy to implement.
+
+External Dependency: No external libraries required.
+
+Performance: Lightweight and fast.
+
+Transparency: Fully visible and controlled logic, since it's handwritten.
+
+Example: Stub is often used in unit tests to verify the behavior of a class or interface.
+
+============================================================STUBS======================================================================================================================
+package com.vwits.junit_testing;
+
+import com.vwits.junit_testing.business.SomeBusinessImpl;
+import com.vwits.junit_testing.data.SomeDataService;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+//using stub implementation
+class SomeDataServiceStub implements SomeDataService {
+    @Override
+    public int[] retrieveAllData() {
+        return new int[]{1,2,3};
+    }
+}
+
+class SomeDataServiceEmptyStub implements SomeDataService {
+    @Override
+    public int[] retrieveAllData() {
+        return new int[]{};
+    }
+}
+
+class SomeDataServiceOneElementStub implements SomeDataService {
+    @Override
+    public int[] retrieveAllData() {
+        return new int[]{5};
+    }
+}
+
+ class SomeBusinessStudTest {
+
+    @Test
+     void calculateSumUsingDataService() {
+
+        SomeBusinessImpl business = new SomeBusinessImpl();
+        business.setSomeDataService(new SomeDataServiceStub());
+        int actualResult = business.calculateSumUsingDataService();
+        int expectedResult = 6;
+        assertEquals(expectedResult,actualResult);
+
+    }
+
+     @Test
+     void calculateSumUsingDataServiceEmpty() {
+
+         SomeBusinessImpl business = new SomeBusinessImpl();
+         business.setSomeDataService(new SomeDataServiceOneElementStub());
+         int actualResult = business.calculateSumUsingDataService();
+         int expectedResult = 5;
+         assertEquals(expectedResult,actualResult);
+
+     }
+
+     @Test
+     void calculateSumUsingDataServiceOneElement() {
+
+         SomeBusinessImpl business = new SomeBusinessImpl();
+         business.setSomeDataService(new SomeDataServiceEmptyStub());
+         int actualResult = business.calculateSumUsingDataService();
+         int expectedResult = 0;
+         assertEquals(expectedResult,actualResult);
+
+     }
+}
+================================================================================================================
+
+✅ Mockito (Framework Mocking)
+Definition: Automatically creates mock objects at runtime using a mocking framework.
+
+Control: Behavior is set using methods like when(...).thenReturn(...).
+
+Ease of Use: Easy to use, even with complex dependencies.
+
+Method Call Verification: ✅ Built-in support with verify(...).
+
+Best Use Case: Complex services, layered apps, and interaction-based testing.
+
+External Dependency: Requires adding Mockito to your project via Maven/Gradle.
+
+Performance: Slightly heavier due to runtime object generation.
+
+Flexibility: Very flexible, ideal for verifying and simulating dynamic behavior.
+
+Transparency: Easy to see and control the behavior of the mock objects.
+
+Example: Mockito is often used in integration tests to verify interactions between services.
