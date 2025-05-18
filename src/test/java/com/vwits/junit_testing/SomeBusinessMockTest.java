@@ -20,4 +20,26 @@ import static org.mockito.Mockito.when;
         int expectedResult = 6;
         assertEquals(expectedResult,actualResult);
     }
+
+     @Test
+     void testCalculateSumUsingDataServiceOneElement() {
+         SomeBusinessImpl business = new SomeBusinessImpl();
+         SomeDataService someDataService = mock(SomeDataService.class);
+         when(someDataService.retrieveAllData()).thenReturn(new int[]{5});
+         business.setSomeDataService(someDataService);
+         int actualResult = business.calculateSumUsingDataService();
+         int expectedResult = 5;
+         assertEquals(expectedResult,actualResult);
+     }
+
+     @Test
+     void testCalculateSumUsingDataServiceEmpty() {
+         SomeBusinessImpl business = new SomeBusinessImpl();
+         SomeDataService someDataService = mock(SomeDataService.class);
+         when(someDataService.retrieveAllData()).thenReturn(new int[]{});
+         business.setSomeDataService(someDataService);
+         int actualResult = business.calculateSumUsingDataService();
+         int expectedResult = 0;
+         assertEquals(expectedResult,actualResult);
+     }
 }
