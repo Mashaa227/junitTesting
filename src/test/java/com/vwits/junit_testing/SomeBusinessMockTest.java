@@ -10,10 +10,11 @@ import static org.mockito.Mockito.when;
 
  class SomeBusinessMockTest {
 
+     SomeBusinessImpl business = new SomeBusinessImpl();
+     SomeDataService someDataService = mock(SomeDataService.class);
+
     @Test
     void testCalculateSumUsingDataService() {
-        SomeBusinessImpl business = new SomeBusinessImpl();
-        SomeDataService someDataService = mock(SomeDataService.class);
         when(someDataService.retrieveAllData()).thenReturn(new int[]{1,2,3});
         business.setSomeDataService(someDataService);
         int actualResult = business.calculateSumUsingDataService();
@@ -23,8 +24,6 @@ import static org.mockito.Mockito.when;
 
      @Test
      void testCalculateSumUsingDataServiceOneElement() {
-         SomeBusinessImpl business = new SomeBusinessImpl();
-         SomeDataService someDataService = mock(SomeDataService.class);
          when(someDataService.retrieveAllData()).thenReturn(new int[]{5});
          business.setSomeDataService(someDataService);
          int actualResult = business.calculateSumUsingDataService();
@@ -34,8 +33,6 @@ import static org.mockito.Mockito.when;
 
      @Test
      void testCalculateSumUsingDataServiceEmpty() {
-         SomeBusinessImpl business = new SomeBusinessImpl();
-         SomeDataService someDataService = mock(SomeDataService.class);
          when(someDataService.retrieveAllData()).thenReturn(new int[]{});
          business.setSomeDataService(someDataService);
          int actualResult = business.calculateSumUsingDataService();
