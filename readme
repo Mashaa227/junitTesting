@@ -178,3 +178,81 @@ Flexibility: Very flexible, ideal for verifying and simulating dynamic behavior.
 Transparency: Easy to see and control the behavior of the mock objects.
 
 Example: Mockito is often used in integration tests to verify interactions between services.
+================================================================================================================
+================================================================================================================
+                                          JUNIT 5
+----------------------------------------------------------------------------------------------------------------
+🔹 1. @RunWith(MockitoJUnitRunner.class) – JUnit 4
+✅ What it does:
+Tells JUnit to run your test class using Mockito’s special test runner, which initializes mocks (@Mock, @InjectMocks, etc.) before each test method.
+
+Without this, you'd have to manually initialize mocks using MockitoAnnotations.initMocks(this);.
+
+✅ When you use it:
+When you're writing tests using JUnit 4, you need @RunWith to plug in external test runners like Mockito’s.
+
+❌ Limitation:
+JUnit 4 allows only one runner. So if you're using another library like Spring (@RunWith(SpringRunner.class)), you can't use Mockito's runner too — you’d need to initialize mocks manually.
+
+📌 Example:
+java
+Copy
+Edit
+@RunWith(MockitoJUnitRunner.class)
+public class OrderServiceTest {
+
+    @Mock
+    private OrderRepository orderRepository;
+
+    @InjectMocks
+    private OrderService orderService;
+
+    @Test
+    public void testCreateOrder() {
+        // Your test logic
+    }
+}
+🔹 2. @ExtendWith(MockitoExtension.class) – JUnit 5
+✅ What it does:
+Registers Mockito’s JUnit 5 extension, which takes care of setting up mocks and injections automatically.
+
+✅ When you use it:
+When your project uses JUnit 5 (Jupiter), which uses extensions instead of runners.
+
+You can combine multiple extensions (e.g., Mockito, Spring, Parameterized tests, etc.) without conflicts.
+
+💡 Why it’s better:
+More flexible: Unlike JUnit 4, you can apply multiple extensions in JUnit 5.
+
+Cleaner syntax, and works well with modern Java and frameworks like Spring Boot + JUnit 5.
+
+📌 Example:
+java
+Copy
+Edit
+@ExtendWith(MockitoExtension.class)
+public class OrderServiceTest {
+
+    @Mock
+    private OrderRepository orderRepository;
+
+    @InjectMocks
+    private OrderService orderService;
+
+    @Test
+    public void testCreateOrder() {
+        // Your test logic
+    }
+}
+🔁 Summary Comparison Table:
+Feature	@RunWith(MockitoJUnitRunner.class)	@ExtendWith(MockitoExtension.class)
+JUnit Version	JUnit 4	JUnit 5
+Mock setup	Automatic	Automatic
+Allows multiple runners/extensions	❌ No	✅ Yes
+Manual mock init alternative	MockitoAnnotations.initMocks(this)	MockitoAnnotations.openMocks(this) (but not needed usually)
+Preferred for modern code	❌ Deprecated	✅ Recommended
+
+🎯 Final Thoughts:
+If you're still using JUnit 4, use @RunWith(MockitoJUnitRunner.class) (or move to JUnit 5 if possible).
+
+If you're on JUnit 5, always prefer @ExtendWith(MockitoExtension.class) — more flexibility, better integration, and cleaner design.
