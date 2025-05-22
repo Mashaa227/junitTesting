@@ -25,6 +25,7 @@ import static org.mockito.Mockito.when;
 
     @Test
     void testCalculateSumUsingDataService() {
+        /*this is a stub or mock*/
         when(someDataService.retrieveAllData()).thenReturn(new int[]{1,2,3});
         assertEquals(6,business.calculateSumUsingDataService());
     }

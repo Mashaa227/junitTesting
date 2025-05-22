@@ -3,6 +3,7 @@ package com.vwits.junit_testing.business;
 import com.vwits.junit_testing.data.SomeDataService;
 import lombok.Setter;
 
+
 @Setter
 public class SomeBusinessImpl {
 
@@ -25,6 +26,7 @@ public class SomeBusinessImpl {
         for (int value: data) {
             sum += value;
         }
+        /* in this scenario a verification is required*/
         return sum;
     }
 
