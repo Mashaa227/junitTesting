@@ -83,7 +83,7 @@ class ListMockTest {
 
         //Verification
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
-        verify(mock).add(captor.capture());
+        verify(mock,times(2)).add(captor.capture());
 
         List<String> allValues = captor.getAllValues();
 
