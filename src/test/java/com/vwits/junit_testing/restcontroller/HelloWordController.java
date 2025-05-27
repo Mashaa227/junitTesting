@@ -23,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     void helloWord() throws Exception {
         //call helloWord
         RequestBuilder request = MockMvcRequestBuilders.get("/hello").accept(MediaType.APPLICATION_JSON);
+                /*Response matchers is used to check the response and status*/
                  mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(content().string("Hello I am Masha"))
