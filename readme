@@ -256,3 +256,7 @@ Preferred for modern code	❌ Deprecated	✅ Recommended
 If you're still using JUnit 4, use @RunWith(MockitoJUnitRunner.class) (or move to JUnit 5 if possible).
 
 If you're on JUnit 5, always prefer @ExtendWith(MockitoExtension.class) — more flexibility, better integration, and cleaner design.
+
+================================================================================================================
+
+In Junit 5, we do not need to add @RunWith(SpringRunner.class) on the top of @MockMvcTest(controllers = OrderController.class)
